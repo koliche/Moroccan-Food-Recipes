@@ -106,7 +106,7 @@ class RecipeCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 40),
+                        margin: EdgeInsets.only(bottom: 50),
                         child: Row(
                           children: [
                             Icon(
