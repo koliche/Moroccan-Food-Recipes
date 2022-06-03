@@ -74,12 +74,12 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Categories(
                               text: "Breakfast",
-                              images: "assets/images/pizza.png"),
+                              images: "assets/images/breakfast.png"),
                           Categories(
-                              text: "Lunch", images: "assets/images/pizza.png"),
+                              text: "Lunch", images: "assets/images/lunch.png"),
                           Categories(
                               text: "Dinner",
-                              images: "assets/images/pizza.png"),
+                              images: "assets/images/dinner.png"),
                         ],
                       ),
                     ),
@@ -150,26 +150,26 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const RecipeCard(
                         image: "assets/images/tagine.webp",
-                        name: "Tagine",
-                        subname: "koliche",
+                        name: "Beef Tagine",
+                        subname: "Moroccan Beef Stew",
                         cooktime: "70min",
                       ),
                       const RecipeCard(
                         image: "assets/images/soup.jpeg",
-                        name: "Moroccan Soup",
-                        subname: "koliche",
+                        name: "Soup",
+                        subname: "Moroccan Harira Recipe",
                         cooktime: "40min",
                       ),
                       const RecipeCard(
                         image: "assets/images/briwat.png",
                         name: "Briwat",
-                        subname: "koliche",
+                        subname: "Almond Briouat Recipe",
                         cooktime: "100min",
                       ),
                       const RecipeCard(
                         image: "assets/images/chebakiaa.jpeg",
-                        name: "Chebakia",
-                        subname: "koliche",
+                        name: "Moroccan Chebakia",
+                        subname: " Sesame and Honey Cookies",
                         cooktime: "290min",
                       ),
                     ],
