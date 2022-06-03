@@ -87,6 +87,12 @@ class RecipeCard extends StatelessWidget {
                                                     fontSize: 16),
                                               ),
                                             ),
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 9.0, top: 33),
+                                                child: Icon(
+                                                  Icons.favorite_border,
+                                                )),
                                           ],
                                         ),
                                       ],
@@ -107,6 +113,7 @@ class RecipeCard extends StatelessWidget {
                   bottom: 20,
                   child: Column(
                     children: [
+                      // Recipes CookTime ::::::
                       Container(
                         margin: EdgeInsets.only(bottom: 50),
                         child: Row(
