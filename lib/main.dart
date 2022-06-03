@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/home.dart';
+import 'package:recipes_app/views/splashScreen.dart';
 
+int? initScreen;
 void main() {
   runApp(const MyApp());
 }
@@ -21,7 +23,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: HomePage(),
+      routes: {
+        'Home': (context) => HomePage(),
+        'Onboarding': (context) => const OnboardingScreen(),
+      },
+      initialRoute:
+          initScreen == 0 || initScreen == null ? "Onboarding" : "Home",
+      debugShowCheckedModeBanner: false,
     );
   }
 }

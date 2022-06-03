@@ -5,6 +5,7 @@ class RecipeCard extends StatelessWidget {
   final String name;
   final String subname;
   final String cooktime;
+  final String rating;
 
   const RecipeCard({
     Key? key,
@@ -12,6 +13,7 @@ class RecipeCard extends StatelessWidget {
     required this.name,
     required this.subname,
     required this.cooktime,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -132,13 +134,15 @@ class RecipeCard extends StatelessWidget {
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.star,
                                 size: 15,
                                 color: Colors.black,
                               ),
-                              Text("4.3")
+                              Text(
+                                rating,
+                              )
                             ],
                           ),
                         ),
