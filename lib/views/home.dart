@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // Bottom Navigation Bar ::::::
         bottomNavigationBar: BottomNavigationBar(
             unselectedItemColor: Colors.black,
             selectedItemColor: Colors.greenAccent,
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
               child: Column(
             children: <Widget>[
+              // search bar ::::::
               Container(
                 margin: EdgeInsets.only(top: 20, left: 20),
                 padding: EdgeInsets.only(right: 150),
@@ -58,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                     top: 5, bottom: 10, left: 30, right: 20),
                 child: SearchWidget(),
               ),
-              // Recipes Category :
+              // Recipes Category :::::
               Container(
                 child: Column(
                   children: [
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 13.0),
+                      padding: const EdgeInsets.only(top: 13.0, left: 13),
                       child: Row(
                         children: [
                           Categories(
@@ -97,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              // Popular Recipes :
+              // Popular Recipes ::::::
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
