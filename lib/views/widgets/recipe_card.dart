@@ -4,12 +4,14 @@ class RecipeCard extends StatelessWidget {
   final String image;
   final String name;
   final String subname;
+  final String cooktime;
 
   const RecipeCard({
     Key? key,
     required this.image,
     required this.name,
     required this.subname,
+    required this.cooktime,
   }) : super(key: key);
 
   @override
@@ -115,7 +117,9 @@ class RecipeCard extends StatelessWidget {
                             SizedBox(
                               width: 7,
                             ),
-                            Text("50 min")
+                            Text(
+                              cooktime,
+                            )
                           ],
                         ),
                       ),

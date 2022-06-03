@@ -12,7 +12,7 @@ class Categories extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: SizedBox(
         height: 60,
-        width: MediaQuery.of(context).size.width * 0.29,
+        width: MediaQuery.of(context).size.width * 0.30,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

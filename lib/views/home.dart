@@ -73,9 +73,10 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         children: [
                           Categories(
-                              text: "Pizza", images: "assets/images/pizza.png"),
+                              text: "Breakfast",
+                              images: "assets/images/pizza.png"),
                           Categories(
-                              text: "Ramin", images: "assets/images/pizza.png"),
+                              text: "Lunch", images: "assets/images/pizza.png"),
                           Categories(
                               text: "Dinner",
                               images: "assets/images/pizza.png"),
@@ -148,19 +149,28 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                     children: [
                       const RecipeCard(
-                        image: "assets/images/splash1.png",
+                        image: "assets/images/tagine.webp",
                         name: "Tagine",
                         subname: "koliche",
+                        cooktime: "70min",
                       ),
                       const RecipeCard(
-                        image: "assets/images/splash1.png",
-                        name: "Tagine",
+                        image: "assets/images/soup.jpeg",
+                        name: "Moroccan Soup",
                         subname: "koliche",
+                        cooktime: "40min",
                       ),
                       const RecipeCard(
-                        image: "assets/images/splash1.png",
-                        name: "Tagine",
+                        image: "assets/images/briwat.png",
+                        name: "Briwat",
                         subname: "koliche",
+                        cooktime: "100min",
+                      ),
+                      const RecipeCard(
+                        image: "assets/images/chebakiaa.jpeg",
+                        name: "Chebakia",
+                        subname: "koliche",
+                        cooktime: "290min",
                       ),
                     ],
                   )),
