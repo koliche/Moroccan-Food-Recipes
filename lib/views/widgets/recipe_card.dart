@@ -125,6 +125,7 @@ class RecipeCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // Recipes Rating :::::::
                       Container(
                         height: 25,
                         width: 50,

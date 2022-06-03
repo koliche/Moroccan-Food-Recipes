@@ -84,13 +84,26 @@ buildRecipeSubTitle(String text) {
   );
 }
 
-buildCalories(String text) {
-  return Text(
-    text,
-    style: TextStyle(
-      fontSize: 16,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
+buildRating(String text) {
+  return Container(
+    height: 25,
+    width: 50,
+    decoration: BoxDecoration(
+        color: Colors.greenAccent, borderRadius: BorderRadius.circular(6)),
+    child: Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.star,
+            size: 15,
+            color: Colors.black,
+          ),
+          Text(
+            text,
+          )
+        ],
+      ),
     ),
   );
 }

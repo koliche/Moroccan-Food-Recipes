@@ -54,7 +54,7 @@ Widget buildRecipe(Recipe recipe, int index) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildCalories(recipe.calories.toString() + " Kcal"),
+              buildRating(recipe.calories.toString()),
               Icon(
                 Icons.favorite_border,
               )
