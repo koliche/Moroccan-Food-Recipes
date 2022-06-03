@@ -13,7 +13,6 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 50.0,
       margin: EdgeInsets.only(right: 18.0),
       child: Row(
         children: <Widget>[
@@ -31,7 +30,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                   icon: Icon(
                     Icons.search,
                     size: 25.0,
-                    color: Colors.grey,
+                    color: Colors.greenAccent,
                   ),
                   border: InputBorder.none,
                   hintText: "Rechercher le titre du poste",

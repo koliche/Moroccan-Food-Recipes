@@ -42,9 +42,20 @@ class _HomePageState extends State<HomePage> {
               child: Column(
             children: <Widget>[
               Container(
-                color: Colors.grey,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 26.0, horizontal: 35.0),
+                margin: EdgeInsets.only(top: 20, left: 20),
+                padding: EdgeInsets.only(right: 150),
+                child: Text(
+                  "What do you want to cook today?",
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                    top: 5, bottom: 10, left: 30, right: 20),
                 child: SearchWidget(),
               ),
               // Recipes Category :
