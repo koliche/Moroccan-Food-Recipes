@@ -13,13 +13,13 @@ class Recipe {
 List<Recipe> getRecipes() {
   return <Recipe>[
     Recipe("Chicken Pastilla", "So irresistibly delicious",
-        "assets/images/pastilla.png", 4.5, 35, 6),
+        "assets/images/pastilla.png", 5.0, 35, 6),
     Recipe("couscous", "True Moroccan classic with a meaty, chilli sauce",
-        "assets/images/couscous.png", 5.0, 45, 10),
+        "assets/images/couscous.png", 4.7, 45, 10),
     Recipe("Soup", "Lamb, soup bones, lemon, tomato paste, brown lentils",
-        "assets/images/soup.jpeg", 4.5, 30, 8),
+        "assets/images/soup.jpeg", 4.3, 30, 8),
     Recipe("Tagine", "White Onion, Fennel, and watercress Salad",
-        "assets/images/splash1.png", 5.0, 35, 12),
+        "assets/images/splash1.png", 4.1, 35, 12),
     Recipe("Filet Mignon", "Bacon-Wrapped Filet Mignon",
         "assets/images/steak_bacon.png", 3.5, 55, 20),
   ];

@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                         name: "Soup",
                         subname: "Moroccan Harira Recipe",
                         cooktime: "40min",
-                        rating: "4.5",
+                        rating: "4.3",
                       ),
                       const RecipeCard(
                         image: "assets/images/briwat.png",
