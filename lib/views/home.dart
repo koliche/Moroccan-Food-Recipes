@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
               new BottomNavigationBarItem(
                   label: "Home", icon: new Icon(Icons.home)),
               new BottomNavigationBarItem(
-                  label: "Categories", icon: new Icon(Icons.category)),
+                  label: "Creator", icon: new Icon(Icons.category)),
               new BottomNavigationBarItem(
                   label: "Favorite", icon: new Icon(Icons.favorite)),
               new BottomNavigationBarItem(
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(top: 20, left: 20),
                 padding: EdgeInsets.only(right: 150),
                 child: Text(
-                  "What do you want to cook today?",
+                  "What do you want to cook today ?",
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.black,
