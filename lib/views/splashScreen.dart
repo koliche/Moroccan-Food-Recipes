@@ -21,6 +21,7 @@ class OnboardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // First Text View Whithe his Animation ::::::
                 FadeInUp(
                   delay: const Duration(milliseconds: 300),
                   child: Text(
@@ -33,6 +34,7 @@ class OnboardingScreen extends StatelessWidget {
                     ).copyWith(height: 1.1),
                   ),
                 ),
+                // Second Text View Whithe his Animation ::::::
                 const SizedBox(height: 5),
                 FadeInUp(
                   delay: const Duration(milliseconds: 500),
@@ -46,6 +48,7 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Image View Whithe his Animation ::::::
                 const SizedBox(height: 40),
                 FadeInUp(
                   delay: const Duration(milliseconds: 700),
@@ -57,6 +60,7 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(height: 55),
                 Center(
                   child: InkWell(
+                    // To Navigate to the Home page ::::::
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -64,6 +68,7 @@ class OnboardingScreen extends StatelessWidget {
                         ),
                       );
                     },
+                    // Get Started Button Whithe his Animation ::::::
                     child: FadeInUp(
                       delay: const Duration(milliseconds: 900),
                       child: Container(
