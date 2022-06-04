@@ -11,7 +11,15 @@ class _FavoritWidgetState extends State<FavoritWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("FavoritWidget "),
+      child: Center(
+          child: Text(
+        "FavoritWidget ",
+        style: TextStyle(
+          fontSize: 25,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      )),
     );
   }
 }

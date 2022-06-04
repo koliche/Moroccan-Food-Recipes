@@ -11,7 +11,15 @@ class _ProfielWidgetState extends State<ProfielWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("ProfielWidget"),
+      child: Center(
+          child: Text(
+        "ProfielWidget",
+        style: TextStyle(
+          fontSize: 25,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      )),
     );
   }
 }

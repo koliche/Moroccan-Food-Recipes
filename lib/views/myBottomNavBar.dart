@@ -12,21 +12,21 @@ class MyBottomNavBar extends StatefulWidget {
 }
 
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
+  int selectedIndex = 0;
+  List<Widget> myWidgets = [
+    HomePage(),
+    CreatorWidget(),
+    FavoritWidget(),
+    ProfielWidget()
+  ];
+  void updateUI(int newVal) {
+    setState(() {
+      selectedIndex = newVal;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var selectedIndex = 0;
-    List<Widget> myWidgets = [
-      HomePage(),
-      CreatorWidget(),
-      FavoritWidget(),
-      ProfielWidget()
-    ];
-    void updateUI(int newVal) {
-      setState(() {
-        selectedIndex = newVal;
-      });
-    }
-
     return Scaffold(
       body: myWidgets[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -43,7 +43,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                 label: "Profile", icon: new Icon(Icons.person)),
           ],
           currentIndex: selectedIndex,
-          onTap: updateUI),
+          onTap: (int index) {
+            updateUI(index);
+          }),
     );
   }
 }
