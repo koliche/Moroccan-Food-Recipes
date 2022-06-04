@@ -6,15 +6,7 @@ class CreatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-          child: Text(
-        "CreatorWidget",
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      )),
+      child: Text("CreatorWidget"),
     );
   }
 }
