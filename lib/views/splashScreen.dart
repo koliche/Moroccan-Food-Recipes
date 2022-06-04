@@ -74,12 +74,12 @@ class OnboardingScreen extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         height: deviceSize.height * 0.07,
-                        width: deviceSize.width * 0.8,
+                        width: deviceSize.width * 0.4,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                             deviceSize.width / 2,
                           ),
-                          color: Colors.greenAccent,
+                          color: Colors.green,
                         ),
                         child: Center(
                           child: Text(

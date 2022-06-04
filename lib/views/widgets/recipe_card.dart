@@ -39,6 +39,7 @@ class RecipeCard extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
+                            // Recipes Images :::::::::::::::
                             Container(
                               height: 120,
                               width: 110,
@@ -65,6 +66,7 @@ class RecipeCard extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
+                                            // Recipes name ::::::::::::
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 8.0, left: 8),
@@ -76,6 +78,7 @@ class RecipeCard extends StatelessWidget {
                                                     fontSize: 16),
                                               ),
                                             ),
+                                            // Recipes subname ::::::::::::
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
@@ -87,6 +90,7 @@ class RecipeCard extends StatelessWidget {
                                                     fontSize: 16),
                                               ),
                                             ),
+                                            // Favorite Icon To add recipes to the favorite liste ::::::
                                             Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 9.0, top: 33),

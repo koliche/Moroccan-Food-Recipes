@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
 
+// The methode to get data from data.dart using getRecipes() ::::
 List<Widget> buildRecipes() {
   List<Widget> list = [];
   for (var i = 0; i < getRecipes().length; i++) {
