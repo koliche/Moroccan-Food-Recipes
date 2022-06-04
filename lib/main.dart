@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/home.dart';
+import 'package:recipes_app/views/myBottomNavBar.dart';
 import 'package:recipes_app/views/splashScreen.dart';
 
 int? initScreen;
@@ -24,11 +25,11 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.grey,
       ),
       routes: {
-        'Home': (context) => HomePage(),
+        'RootPage': (context) => MyBottomNavBar(),
         'Onboarding': (context) => const OnboardingScreen(),
       },
       initialRoute:
-          initScreen == 0 || initScreen == null ? "Onboarding" : "Home",
+          initScreen == 0 || initScreen == null ? "Onboarding" : "RootPage",
       debugShowCheckedModeBanner: false,
     );
   }

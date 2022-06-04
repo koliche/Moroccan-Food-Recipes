@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:recipes_app/views/myBottomNavBar.dart';
 
 import 'home.dart';
 
@@ -60,11 +61,11 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(height: 55),
                 Center(
                   child: InkWell(
-                    // To Navigate to the Home page ::::::
+                    // To Navigate to the Root page ::::::
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => HomePage(),
+                          builder: (context) => MyBottomNavBar(),
                         ),
                       );
                     },
