@@ -33,12 +33,12 @@ class _SearchWidgetState extends State<SearchWidget> {
                     color: Colors.greenAccent,
                   ),
                   border: InputBorder.none,
-                  hintText: "Rechercher le titre du poste",
+                  hintText: "search by recipes name ...",
                 ),
               ),
             ),
           ),
-          //icon setting
+          //icon Filter setting ::::::::::
           Container(
             width: 50.0,
             height: 50.0,
