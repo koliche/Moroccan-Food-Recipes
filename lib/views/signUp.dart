@@ -10,6 +10,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Container(
+          child: Text(
+        "Register Widget",
+        style: TextStyle(
+          fontSize: 25,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      )),
+    );
   }
 }
