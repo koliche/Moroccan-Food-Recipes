@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
@@ -25,7 +27,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.grey,
       ),
       routes: {
-        'RootPage': (context) => MyBottomNavBar(),
+        'RootPage': (context) => const MyBottomNavBar(),
         'Onboarding': (context) => const OnboardingScreen(),
       },
       initialRoute:

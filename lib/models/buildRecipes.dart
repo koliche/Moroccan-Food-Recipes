@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
@@ -20,7 +22,7 @@ Widget buildRecipe(Recipe recipe, int index) {
         );*/
     },
     child: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(20),
@@ -29,7 +31,7 @@ Widget buildRecipe(Recipe recipe, int index) {
       ),
       margin: EdgeInsets.only(
           right: 16, left: index == 0 ? 16 : 0, bottom: 16, top: 8),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       width: 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,7 +49,7 @@ Widget buildRecipe(Recipe recipe, int index) {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           buildRecipeTitle(recipe.title),
@@ -56,7 +58,7 @@ Widget buildRecipe(Recipe recipe, int index) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildRating(recipe.calories.toString()),
-              Icon(
+              const Icon(
                 Icons.favorite_border,
               )
             ],

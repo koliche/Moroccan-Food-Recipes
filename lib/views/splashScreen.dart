@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
@@ -27,7 +29,7 @@ class OnboardingScreen extends StatelessWidget {
                   delay: const Duration(milliseconds: 300),
                   child: Text(
                     'What  to cook\n today?',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Acherus',
                       fontSize: 38,
                       fontWeight: FontWeight.bold,
@@ -39,7 +41,7 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(height: 5),
                 FadeInUp(
                   delay: const Duration(milliseconds: 500),
-                  child: Text(
+                  child: const Text(
                     'Delicious and Detailed recipes from around the world\n on your phone',
                     style: TextStyle(
                       fontFamily: 'Acherus',
@@ -65,7 +67,7 @@ class OnboardingScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => MyBottomNavBar(),
+                          builder: (context) => const MyBottomNavBar(),
                         ),
                       );
                     },
@@ -85,7 +87,7 @@ class OnboardingScreen extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Get Started',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Acherus',
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,18 +15,18 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(right: 18.0),
+      margin: const EdgeInsets.only(right: 18.0),
       child: Row(
         children: <Widget>[
           // search TextField
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: TextField(
+              child: const TextField(
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
                   icon: Icon(
@@ -42,12 +44,12 @@ class _SearchWidgetState extends State<SearchWidget> {
           Container(
             width: 50.0,
             height: 50.0,
-            margin: EdgeInsets.only(left: 12.0),
+            margin: const EdgeInsets.only(left: 12.0),
             decoration: BoxDecoration(
               color: Colors.greenAccent,
               borderRadius: BorderRadius.circular(12.0),
             ),
-            child: Icon(
+            child: const Icon(
               FontAwesomeIcons.slidersH,
               color: Colors.white,
               size: 20.0,

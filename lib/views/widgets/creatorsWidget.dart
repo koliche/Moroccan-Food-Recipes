@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class CreatorWidget extends StatelessWidget {
@@ -5,15 +7,13 @@ class CreatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          "CreatorWidget",
-          style: TextStyle(
-            fontSize: 25,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+    return const Center(
+      child: Text(
+        "CreatorWidget",
+        style: TextStyle(
+          fontSize: 25,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

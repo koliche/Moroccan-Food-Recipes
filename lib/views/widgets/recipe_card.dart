@@ -21,7 +21,7 @@ class RecipeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.white,
           ),
@@ -40,7 +40,7 @@ class RecipeCard extends StatelessWidget {
                         child: Row(
                           children: [
                             // Recipes Images :::::::::::::::
-                            Container(
+                            SizedBox(
                               height: 120,
                               width: 110,
                               child: Image.asset(
@@ -91,8 +91,8 @@ class RecipeCard extends StatelessWidget {
                                               ),
                                             ),
                                             // Favorite Icon To add recipes to the favorite liste ::::::
-                                            Padding(
-                                                padding: const EdgeInsets.only(
+                                            const Padding(
+                                                padding: EdgeInsets.only(
                                                     left: 9.0, top: 33),
                                                 child: Icon(
                                                   Icons.favorite_border,
@@ -119,15 +119,15 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       // Recipes CookTime ::::::
                       Container(
-                        margin: EdgeInsets.only(bottom: 50),
+                        margin: const EdgeInsets.only(bottom: 50),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.schedule,
                               color: Colors.grey,
                               size: 18,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 7,
                             ),
                             Text(
@@ -147,7 +147,7 @@ class RecipeCard extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 size: 15,
                                 color: Colors.black,

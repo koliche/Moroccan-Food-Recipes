@@ -1,7 +1,9 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class FavoritWidget extends StatefulWidget {
-  FavoritWidget({Key? key}) : super(key: key);
+  const FavoritWidget({Key? key}) : super(key: key);
 
   @override
   State<FavoritWidget> createState() => _FavoritWidgetState();
@@ -10,16 +12,14 @@ class FavoritWidget extends StatefulWidget {
 class _FavoritWidgetState extends State<FavoritWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-          child: Text(
-        "FavoritWidget ",
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      )),
-    );
+    return const Center(
+        child: Text(
+      "FavoritWidget ",
+      style: TextStyle(
+        fontSize: 25,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),
+    ));
   }
 }
