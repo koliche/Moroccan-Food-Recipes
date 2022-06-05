@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipes_app/views/widgets/UpsideLogin.dart';
+import 'package:recipes_app/views/widgets/LoginWidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
