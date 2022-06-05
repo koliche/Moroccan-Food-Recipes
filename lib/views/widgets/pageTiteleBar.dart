@@ -28,7 +28,7 @@ class PageTitleBar extends StatelessWidget {
                 fontSize: 20,
                 letterSpacing: 1,
                 fontWeight: FontWeight.bold,
-                color: Color(0xfff575861)),
+                color: Colors.black),
           ),
         ),
       ),
