@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/home.dart';
-import 'package:recipes_app/views/widgets/LoginWidget.dart';
+import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/widgets/ProfielWidget.dart';
 import 'package:recipes_app/views/widgets/creatorsWidget.dart';
 import 'package:recipes_app/views/widgets/favoritWidget.dart';
@@ -21,9 +21,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const CreatorWidget(),
     const FavoritWidget(),
     //  TODO: Change this withe ProfielWidget() :::::::
-    Upside(
-      imgUri: "assets/images/login.png",
-    ),
+    LoginScreen(),
   ];
   void updateUI(int newVal) {
     setState(() {

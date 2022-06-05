@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/widgets/LoginWidget.dart';
+import 'package:recipes_app/views/widgets/pageTiteleBar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,14 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
-            width: 200,
-            height: 200,
+            width: double.infinity,
+            height: double.infinity,
             child: SingleChildScrollView(
               child: Stack(
                 children: [
-                  Upside(
-                    imgUri: "assets/images/login.png",
-                  ),
+                  // Up side Logo and disgne :::::::
+                  Upside(),
+                  PageTitleBar(title: "Login to your account")
                 ],
               ),
             )),
