@@ -14,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,16 +49,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               // Email and Password Fialde :::::::
                               Container(
                                 padding: EdgeInsets.only(left: 10, right: 10),
-                                child: const RoundedInputField(
-                                    hintText: "Email", icon: Icons.email),
+                                child: RoundedInputField(
+                                  hintText: "Email",
+                                  icon: Icons.email,
+                                  controller: _emailTextController,
+                                ),
                               ),
                               Container(
                                   padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: const RoundedPasswordField()),
+                                  child: RoundedPasswordField(
+                                    controller: _passwordTextController,
+                                  )),
 
                               switchListTile(),
                               // Log in Button ::::::::::::::::::
-                              RoundedButton(text: 'LOGIN', press: () {}),
+                              RoundedButton(
+                                  text: 'LOGIN',
+                                  press: () {
+                                    print(_emailTextController.text);
+                                    print(_passwordTextController.text);
+                                  }),
                               const SizedBox(
                                 height: 10,
                               ),

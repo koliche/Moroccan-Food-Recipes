@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RoundedPasswordField extends StatelessWidget {
-  const RoundedPasswordField(
-      {Key? key, this.hintText, this.icon = Icons.person})
+  RoundedPasswordField(
+      {Key? key,
+      this.hintText,
+      this.icon = Icons.person,
+      required this.controller})
       : super(key: key);
   final String? hintText;
   final IconData icon;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,7 @@ class RoundedPasswordField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
+        controller: controller,
         obscureText: true,
         cursorColor: Colors.black,
         decoration: const InputDecoration(

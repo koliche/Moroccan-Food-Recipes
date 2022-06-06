@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RoundedInputField extends StatelessWidget {
-  const RoundedInputField({Key? key, this.hintText, this.icon = Icons.person})
+  RoundedInputField(
+      {Key? key,
+      this.hintText,
+      this.icon = Icons.person,
+      required this.controller})
       : super(key: key);
   final String? hintText;
   final IconData icon;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +21,7 @@ class RoundedInputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
+        controller: controller,
         cursorColor: Colors.black,
         decoration: InputDecoration(
             icon: Icon(
