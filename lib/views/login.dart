@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/signUp.dart';
 import 'package:recipes_app/views/widgets/LoginWidget.dart';
 import 'package:recipes_app/views/widgets/pageTiteleBar.dart';
@@ -69,6 +71,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   press: () {
                                     print(_emailTextController.text);
                                     print(_passwordTextController.text);
+                                    FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: _emailTextController.text,
+                                            password:
+                                                _passwordTextController.text)
+                                        .then((value) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage()));
+                                    }).onError((error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    });
                                   }),
                               const SizedBox(
                                 height: 10,

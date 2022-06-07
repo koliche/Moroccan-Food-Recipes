@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:recipes_app/views/widgets/LoginWidget.dart';
 import 'package:recipes_app/views/widgets/pageTiteleBar.dart';
 import 'package:recipes_app/views/widgets/roundedButton.dart';
@@ -88,7 +89,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     hintText: "Confirm Password",
                                     controller: _passwordTextController,
                                   )),
-                              RoundedButton(text: 'REGISTER', press: () {}),
+                              RoundedButton(
+                                  text: 'REGISTER',
+                                  press: () {
+                                    FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                            email: _emailTextController.text,
+                                            password:
+                                                _passwordTextController.text)
+                                        .then((value) {
+                                      print("Created New Account");
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen()));
+                                    }).onError((error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    });
+                                  }),
                               const SizedBox(
                                 height: 10,
                               ),
