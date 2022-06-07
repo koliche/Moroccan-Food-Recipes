@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Container(
                                   padding: EdgeInsets.only(left: 10, right: 10),
                                   child: RoundedPasswordField(
+                                    hintText: "Password",
                                     controller: _passwordTextController,
                                   )),
 

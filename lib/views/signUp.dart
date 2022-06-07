@@ -7,8 +7,6 @@ import 'package:recipes_app/views/widgets/roundedPasswordField.dart';
 
 import 'login.dart';
 
-
-
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
@@ -20,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
- 
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SingleChildScrollView(
             child: Stack(
               children: [
-                 Upside(),
+                Upside(),
                 const PageTitleBar(title: 'Create New Account'),
                 Padding(
                   padding: const EdgeInsets.only(top: 320.0),
@@ -51,7 +49,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        
                         const Text(
                           "or use your email account",
                           style: TextStyle(
@@ -66,33 +63,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Container(
                                 padding: EdgeInsets.only(left: 10, right: 10),
                                 child: RoundedInputField(
+                                  hintText: "Name",
+                                  icon: Icons.person,
+                                  controller: _nameTextController,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: RoundedInputField(
                                   hintText: "Email",
                                   icon: Icons.email,
                                   controller: _emailTextController,
                                 ),
                               ),
-                               Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                child: RoundedInputField(
-                                  hintText: "Name",
-                                  icon: Icons.person,
-                                  controller: _nameTextController,
-                                ),
-                              ),
-                               Container(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                child: RoundedInputField(
-                                  hintText: "Name",
-                                  icon: Icons.person,
-                                  controller: _nameTextController,
-                                ),
-                              ),
-                               Container(
+                              Container(
                                   padding: EdgeInsets.only(left: 10, right: 10),
                                   child: RoundedPasswordField(
+                                    hintText: "Password",
                                     controller: _passwordTextController,
                                   )),
-                              
+                              Container(
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: RoundedPasswordField(
+                                    hintText: "Confirm Password",
+                                    controller: _passwordTextController,
+                                  )),
                               RoundedButton(text: 'REGISTER', press: () {}),
                               const SizedBox(
                                 height: 10,
@@ -101,9 +96,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 title: "Already have an account?",
                                 navigatorText: "Login here",
                                 onTap: () {
-                                  Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => const LoginScreen())
-                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
                                 },
                               ),
                               const SizedBox(
