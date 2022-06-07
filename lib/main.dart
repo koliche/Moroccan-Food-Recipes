@@ -1,13 +1,15 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recipes_app/views/home.dart';
+import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
 import 'package:recipes_app/views/splashScreen.dart';
 
 int? initScreen;
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
