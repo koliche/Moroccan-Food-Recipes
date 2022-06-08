@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               RoundedButton(
                                   text: 'LOGIN',
                                   press: () {
+                                    // the login methode :::::::::::::::::::::::::::::
                                     login();
                                   }),
                               const SizedBox(
@@ -131,7 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
               email: _emailTextController.text,
               password: _passwordTextController.text)
           .then((value) {
-        Navigator.pushNamed(this.context, '/rootPage');
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/rootPage', (route) => false);
+        ;
       }).onError((error, stackTrace) {
         Fluttertoast.showToast(
             msg: error.toString(),

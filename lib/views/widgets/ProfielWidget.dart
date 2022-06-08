@@ -28,6 +28,7 @@ class _ProfielWidgetState extends State<ProfielWidget> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            // the logout methode :::::::::::::::::::::::
             TextButton(
               child: Text("Log Out"),
               onPressed: () async {

@@ -95,6 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               RoundedButton(
                                   text: 'REGISTER',
                                   press: () {
+                                    // the register methode ::::::::::::::
                                     signup();
                                   }),
                               const SizedBox(
@@ -165,8 +166,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               password: _passwordTextController.text)
           .then((value) {
         print("Created New Account");
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/loginPage', (route) => false);
       }).onError((error, stackTrace) {
         Fluttertoast.showToast(
             msg: "${error.toString()}",

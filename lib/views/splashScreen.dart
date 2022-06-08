@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:provider/provider.dart';
 import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
 
@@ -114,9 +113,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void AuthenticationRouting() {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      Navigator.pushNamed(context, '/loginPage');
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/loginPage', (route) => false);
     } else {
-      Navigator.pushNamed(context, '/rootPage');
+      Navigator.pushNamedAndRemoveUntil(context, '/rootPage', (route) => false);
     }
   }
 }
