@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:recipes_app/models/authentification.dart';
 import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
 import 'package:recipes_app/views/signUp.dart';
@@ -72,7 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   press: () {
                                     print(_emailTextController.text);
                                     print(_passwordTextController.text);
-                                    FirebaseAuth.instance
+                                    context
+                                        .read<AuthenticationService>()
+                                        .logIn(
+                                            email: _emailTextController.text
+                                                .trim(),
+                                            password: _passwordTextController
+                                                .text
+                                                .trim())
+                                        .then((value) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MyBottomNavBar()));
+                                    }).onError((error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    });
+                                    /*FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
                                             email: _emailTextController.text,
                                             password:
@@ -85,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   MyBottomNavBar()));
                                     }).onError((error, stackTrace) {
                                       print("Error ${error.toString()}");
-                                    });
+                                    });*/
                                   }),
                               const SizedBox(
                                 height: 10,
@@ -94,11 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 title: "Don't have an account?",
                                 navigatorText: "Register here",
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SignUpScreen()));
+                                  Navigator.pushNamed(context, '/SignupPage');
                                 },
                               ),
                               const SizedBox(

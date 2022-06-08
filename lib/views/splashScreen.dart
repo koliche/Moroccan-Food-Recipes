@@ -1,16 +1,24 @@
 // ignore_for_file: file_names, unused_import
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:provider/provider.dart';
+import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
 
 import 'home.dart';
 
 //import 'package:foodies/components/bottom_bar.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -65,11 +73,7 @@ class OnboardingScreen extends StatelessWidget {
                   child: InkWell(
                     // To Navigate to the Root page ::::::
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const MyBottomNavBar(),
-                        ),
-                      );
+                      AuthenticationRouting();
                     },
                     // Get Started Button Whithe his Animation ::::::
                     child: FadeInUp(
@@ -105,5 +109,14 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  void AuthenticationRouting() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      Navigator.pushNamed(context, '/loginPage');
+    } else {
+      Navigator.pushNamed(context, '/rootPage');
+    }
   }
 }

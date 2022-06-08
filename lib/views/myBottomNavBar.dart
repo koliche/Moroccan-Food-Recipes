@@ -20,8 +20,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const HomePage(),
     const CreatorWidget(),
     const FavoritWidget(),
-    //  TODO: Change this withe ProfielWidget() :::::::
-    LoginScreen(),
+    const ProfielWidget(),
   ];
   void updateUI(int newVal) {
     setState(() {

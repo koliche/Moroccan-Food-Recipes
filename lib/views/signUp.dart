@@ -115,11 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 title: "Already have an account?",
                                 navigatorText: "Login here",
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginScreen()));
+                                  Navigator.pushNamed(context, '/loginPage');
                                 },
                               ),
                               const SizedBox(

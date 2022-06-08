@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:recipes_app/config/routeGenerator.dart';
+import 'package:recipes_app/models/authentification.dart';
 import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
@@ -26,18 +29,37 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.grey,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        debugShowCheckedModeBanner: false,
+        // Initially display FirstPage
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
+      /*
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      routes: {
-        'RootPage': (context) => const MyBottomNavBar(),
-        'Onboarding': (context) => const OnboardingScreen(),
-      },
-      initialRoute:
-          initScreen == 0 || initScreen == null ? "Onboarding" : "RootPage",
-      debugShowCheckedModeBanner: false,
+      // Initially display FirstPage
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      debugShowCheckedModeBanner: false,*/
     );
   }
 }
