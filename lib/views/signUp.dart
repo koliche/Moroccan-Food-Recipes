@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:recipes_app/views/widgets/LoginWidget.dart';
 import 'package:recipes_app/views/widgets/pageTiteleBar.dart';
 import 'package:recipes_app/views/widgets/roundedButton.dart';
@@ -19,6 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
+  TextEditingController _confirmePasswordTextController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,26 +90,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   padding: EdgeInsets.only(left: 10, right: 10),
                                   child: RoundedPasswordField(
                                     hintText: "Confirm Password",
-                                    controller: _passwordTextController,
+                                    controller: _confirmePasswordTextController,
                                   )),
                               RoundedButton(
                                   text: 'REGISTER',
                                   press: () {
-                                    FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                            email: _emailTextController.text,
-                                            password:
-                                                _passwordTextController.text)
-                                        .then((value) {
-                                      print("Created New Account");
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginScreen()));
-                                    }).onError((error, stackTrace) {
-                                      print("Error ${error.toString()}");
-                                    });
+                                    signup();
                                   }),
                               const SizedBox(
                                 height: 10,
@@ -134,5 +123,60 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void signup() async {
+    if (_passwordTextController.text.length < 6) {
+      Fluttertoast.showToast(
+          msg: "Password is short +6charactare !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    if (_passwordTextController.text != _confirmePasswordTextController.text) {
+      Fluttertoast.showToast(
+          msg: "Confirme Password is invalide",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    if (_passwordTextController.text.isEmpty ||
+        _confirmePasswordTextController.text.isEmpty ||
+        _emailTextController.text.isEmpty ||
+        _nameTextController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "You sould add all fielde",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailTextController.text,
+              password: _passwordTextController.text)
+          .then((value) {
+        print("Created New Account");
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }).onError((error, stackTrace) {
+        Fluttertoast.showToast(
+            msg: "${error.toString()}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    }
   }
 }

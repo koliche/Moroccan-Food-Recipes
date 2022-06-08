@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recipes_app/views/home.dart';
+import 'package:recipes_app/views/myBottomNavBar.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -19,13 +21,17 @@ class AuthenticationService {
   /// This is to make it as easy as possible but a better way would be to
   /// use your own custom class that would take the exception and return better
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
-  Future<String?> logIn(
+  Future<Object?> logIn(
       {required String email, required String password}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return "Signed in";
+      return HomePage();
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print(' error password is weeek');
+        return e.message;
+      }
       return e.message;
     }
   }
@@ -41,6 +47,11 @@ class AuthenticationService {
           email: email, password: password);
       return "Signed up";
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return e.message;
+      } else if (e.code == 'email-already-in-use') {
+        return e.message;
+      }
       return e.message;
     }
   }

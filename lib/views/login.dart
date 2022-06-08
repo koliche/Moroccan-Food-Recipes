@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ import 'package:recipes_app/views/widgets/roundedInputField.dart';
 import 'package:recipes_app/views/widgets/roundedPasswordField.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -72,39 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               RoundedButton(
                                   text: 'LOGIN',
                                   press: () {
-                                    print(_emailTextController.text);
-                                    print(_passwordTextController.text);
-                                    context
-                                        .read<AuthenticationService>()
-                                        .logIn(
-                                            email: _emailTextController.text
-                                                .trim(),
-                                            password: _passwordTextController
-                                                .text
-                                                .trim())
-                                        .then((value) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyBottomNavBar()));
-                                    }).onError((error, stackTrace) {
-                                      print("Error ${error.toString()}");
-                                    });
-                                    /*FirebaseAuth.instance
-                                        .signInWithEmailAndPassword(
-                                            email: _emailTextController.text,
-                                            password:
-                                                _passwordTextController.text)
-                                        .then((value) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyBottomNavBar()));
-                                    }).onError((error, stackTrace) {
-                                      print("Error ${error.toString()}");
-                                    });*/
+                                    login();
                                   }),
                               const SizedBox(
                                 height: 10,
@@ -143,6 +112,37 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void login() async {
+    if (_passwordTextController.text.isEmpty ||
+        _emailTextController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "You sould add all fielde",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: _emailTextController.text,
+              password: _passwordTextController.text)
+          .then((value) {
+        Navigator.pushNamed(this.context, '/rootPage');
+      }).onError((error, stackTrace) {
+        Fluttertoast.showToast(
+            msg: error.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+    }
   }
 }
 
