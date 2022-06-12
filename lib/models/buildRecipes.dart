@@ -1,8 +1,10 @@
-// ignore_for_file: file_names
+/* ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
+import 'package:recipes_app/views/details.dart';
+import 'package:recipes_app/views/home.dart';
 
 // The methode to get data from data.dart using getRecipes() ::::
 List<Widget> buildRecipes() {
@@ -16,10 +18,10 @@ List<Widget> buildRecipes() {
 Widget buildRecipe(Recipe recipe, int index) {
   return GestureDetector(
     onTap: () {
-      /*Navigator.push(
+      Navigator.push(
           context,
-          //MaterialPageRoute(builder: (context) => Detail(recipe: recipe)),
-        );*/
+          MaterialPageRoute(builder: (context) => Detail(recipe: recipe)),
+        );
     },
     child: Container(
       decoration: const BoxDecoration(
@@ -67,4 +69,4 @@ Widget buildRecipe(Recipe recipe, int index) {
       ),
     ),
   );
-}
+}*/
