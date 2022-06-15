@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipes_app/models/data.dart';
 
-class RecipeCard extends StatelessWidget {
+class RecipeCard extends StatefulWidget {
   final String image;
   final String name;
   final String subname;
@@ -17,7 +18,7 @@ class RecipeCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, Recipes recipes) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -44,7 +45,7 @@ class RecipeCard extends StatelessWidget {
                               height: 120,
                               width: 110,
                               child: Image.asset(
-                                image,
+                                recipes.image,
                                 height: 30,
                                 width: 30,
                               ),
@@ -71,7 +72,7 @@ class RecipeCard extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   top: 8.0, left: 8),
                                               child: Text(
-                                                name,
+                                                recipes.name,
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black,
@@ -83,7 +84,7 @@ class RecipeCard extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
                                               child: Text(
-                                                subname,
+                                                recipes.subname,
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: Colors.grey,
@@ -131,7 +132,7 @@ class RecipeCard extends StatelessWidget {
                               width: 7,
                             ),
                             Text(
-                              cooktime,
+                              recipes.cooktime,
                             )
                           ],
                         ),
@@ -153,7 +154,7 @@ class RecipeCard extends StatelessWidget {
                                 color: Colors.black,
                               ),
                               Text(
-                                rating,
+                                recipes.rating,
                               )
                             ],
                           ),
@@ -164,5 +165,11 @@ class RecipeCard extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
+import 'package:recipes_app/views/Detail.dart';
 import 'package:recipes_app/views/details.dart';
 import 'package:recipes_app/views/widgets/Categories.dart';
 import 'package:recipes_app/views/widgets/creatorsWidget.dart';
@@ -135,38 +136,13 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 19,
             ),
-            Column(
-              children: const [
-                RecipeCard(
-                  image: "assets/images/tagine.webp",
-                  name: "Beef Tagine",
-                  subname: "Moroccan Beef Stew",
-                  cooktime: "70min",
-                  rating: "5.0",
-                ),
-                RecipeCard(
-                  image: "assets/images/soup.jpeg",
-                  name: "Soup",
-                  subname: "Moroccan Harira Recipe",
-                  cooktime: "40min",
-                  rating: "4.3",
-                ),
-                RecipeCard(
-                  image: "assets/images/briwat.png",
-                  name: "Briwat",
-                  subname: "Almond Briouat Recipe",
-                  cooktime: "100min",
-                  rating: "4.0",
-                ),
-                RecipeCard(
-                  image: "assets/images/chebakiaa.jpeg",
-                  name: "Moroccan Chebakia",
-                  subname: " Sesame and Honey Cookies",
-                  cooktime: "290min",
-                  rating: "4.6",
-                ),
-              ],
-            ),
+            Column(children: [
+              ListView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: Recipescard(),
+              ),
+            ]),
           ])
         ],
       )),
@@ -181,6 +157,7 @@ class _HomePageState extends State<HomePage> {
     return list;
   }
 
+  // for popular recipe
   Widget buildRecipe(Recipe recipe, int index) {
     return GestureDetector(
       onTap: () {
@@ -234,6 +211,171 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  // for all recipes
+  List<Widget> Recipescard() {
+    List<Widget> list = [];
+    for (var i = 0; i < getRecipes().length; i++) {
+      list.add(RecipeCard(getRecipe()[i], i));
+    }
+    return list;
+  }
+
+  Widget RecipeCard(Recipes recipes, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return Details(recipes: recipes);
+          }),
+        );
+      },
+      child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.white,
+          ),
+          child: Stack(
+            children: [
+              SizedBox(
+                height: 130,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 130,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            // Recipes Images :::::::::::::::
+                            SizedBox(
+                              height: 120,
+                              width: 110,
+                              child: Image.asset(
+                                recipes.image,
+                                height: 30,
+                                width: 30,
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            // Recipes name ::::::::::::
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0, left: 8),
+                                              child: Text(
+                                                recipes.name,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                            // Recipes subname ::::::::::::
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Text(
+                                                recipes.subname,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.grey,
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                            // Favorite Icon To add recipes to the favorite liste ::::::
+                                            const Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 9.0, top: 33),
+                                                child: Icon(
+                                                  Icons.favorite_border,
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                  right: 15,
+                  bottom: 20,
+                  child: Column(
+                    children: [
+                      // Recipes CookTime ::::::
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 50),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.schedule,
+                              color: Colors.grey,
+                              size: 18,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              recipes.cooktime,
+                            )
+                          ],
+                        ),
+                      ),
+                      // Recipes Rating :::::::
+                      Container(
+                        height: 25,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                size: 15,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                recipes.rating,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ))
+            ],
+          )),
     );
   }
 }

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
-
-class Detail extends StatelessWidget {
-  final Recipe recipe;
-  
-
-  Detail({required this.recipe});
-
-  @override
-  Widget build(BuildContext context) {
+class Details extends StatelessWidget {
+ 
+  final Recipes recipes;
+  Details({ required this.recipes});
+   @override
+   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -45,8 +42,8 @@ class Detail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildTextTitleVariation1(recipe.title),
-                  buildTextSubTitleVariation1(recipe.description),
+                  buildTextTitleVariation1(recipes.name),
+                  buildTextSubTitleVariation1(recipes.subname),
                 ],
               ),
             ),
@@ -66,27 +63,27 @@ class Detail extends StatelessWidget {
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.calories, "Calories", "Kcal"),
+                      buildNutrition(recipes.calories, "Calories", "Kcal"),
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.carbo, "Carbo", "g"),
+                      buildNutrition(recipes.carbo, "Carbo", "g"),
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.protein, "Protein", "g"),
+                      buildNutrition(recipes.protein, "Protein", "g"),
                     ],
                   ),
                   Positioned(
                     right: -80,
                     child: Hero(
-                      tag: recipe.image,
+                      tag: recipes.image,
                       child: Container(
                         height: 310,
                         width: 310,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(recipe.image),
+                            image: AssetImage(recipes.image),
                             fit: BoxFit.fitHeight,
                           ),
                         ),
@@ -149,7 +146,6 @@ class Detail extends StatelessWidget {
           )),
     );
   }
-
   Widget buildNutrition(int value, String title, String subTitle) {
     return Container(
       height: 60,
@@ -224,7 +220,6 @@ class Detail extends StatelessWidget {
       ),
     );
   }
-
   
+ 
 }
-
