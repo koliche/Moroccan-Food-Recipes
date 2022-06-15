@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:recipes_app/views/widgets/LoginWidget.dart';
 import 'package:recipes_app/views/widgets/pageTiteleBar.dart';
 import 'package:recipes_app/views/widgets/roundedButton.dart';
@@ -127,57 +129,87 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signup() async {
-    if (_passwordTextController.text.length < 6) {
-      Fluttertoast.showToast(
-          msg: "Password is short +6charactare !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    var fullName = _nameTextController.text.trim();
+    var email = _emailTextController.text.trim();
+    var password = _passwordTextController.text.trim();
+    var confirmPass = _confirmePasswordTextController.text.trim();
+
+    if (fullName.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPass.isEmpty) {
+      // show error toast
+
+      Fluttertoast.showToast(msg: 'Please fill all fields');
+      return;
     }
-    if (_passwordTextController.text != _confirmePasswordTextController.text) {
+
+    if (password.length < 6) {
+      // show error toast
       Fluttertoast.showToast(
-          msg: "Confirme Password is invalide",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+          msg: 'Weak Password, at least 6 characters are required');
+
+      return;
     }
-    if (_passwordTextController.text.isEmpty ||
-        _confirmePasswordTextController.text.isEmpty ||
-        _emailTextController.text.isEmpty ||
-        _nameTextController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: "You sould add all fielde",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    } else {
-      FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _emailTextController.text,
-              password: _passwordTextController.text)
-          .then((value) {
-        print("Created New Account");
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/loginPage', (route) => false);
-      }).onError((error, stackTrace) {
-        Fluttertoast.showToast(
-            msg: "${error.toString()}",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      });
+
+    if (password != confirmPass) {
+      // show error toast
+      Fluttertoast.showToast(msg: 'Passwords do not match');
+
+      return;
+    }
+
+    // request to firebase auth
+
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+    );
+
+    progressDialog.style(message: "Sin up succesfully");
+
+    progressDialog.show();
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      if (userCredential.user != null) {
+        // store user information in Realtime database
+
+        DatabaseReference userRef =
+            // ignore: deprecated_member_use
+            FirebaseDatabase.instance.reference().child('users');
+
+        String uid = userCredential.user!.uid;
+        int dt = DateTime.now().millisecondsSinceEpoch;
+
+        await userRef.child(uid).set({
+          'fullName': fullName,
+          'email': email,
+          'uid': uid,
+          'dt': dt,
+          'profileImage': ''
+        });
+
+        Fluttertoast.showToast(msg: 'Success');
+
+        Navigator.of(context).pop();
+      } else {
+        Fluttertoast.showToast(msg: 'Failed');
+      }
+
+      progressDialog.hide();
+    } on FirebaseAuthException catch (e) {
+      progressDialog.hide();
+      if (e.code == 'email-already-in-use') {
+        Fluttertoast.showToast(msg: 'Email is already in Use');
+      } else if (e.code == 'weak-password') {
+        Fluttertoast.showToast(msg: 'Password is weak');
+      }
+    } catch (e) {
+      progressDialog.hide();
+      Fluttertoast.showToast(msg: 'Something went wrong');
     }
   }
 }

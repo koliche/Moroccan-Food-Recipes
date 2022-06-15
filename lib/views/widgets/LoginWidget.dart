@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recipes_app/constants.dart';
 
 class Upside extends StatelessWidget {
   Upside({
@@ -15,7 +16,7 @@ class Upside extends StatelessWidget {
         Container(
           width: 600,
           height: 400,
-          color: Color.fromARGB(255, 83, 196, 141),
+          color: kPrimaryColor,
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Image.asset(
@@ -80,7 +81,7 @@ class UnderPart extends StatelessWidget {
           child: Text(
             navigatorText,
             style: const TextStyle(
-                color: Colors.green,
+                color: kPrimaryAccetsColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Opensans'),

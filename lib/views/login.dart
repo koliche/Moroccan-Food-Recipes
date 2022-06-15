@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:recipes_app/models/authentification.dart';
 import 'package:recipes_app/views/home.dart';
@@ -116,51 +117,62 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
-    if (_passwordTextController.text.isEmpty ||
-        _emailTextController.text.isEmpty) {
-      Fluttertoast.showToast(
-          msg: "You sould add all fielde",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    } else {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _emailTextController.text,
-              password: _passwordTextController.text)
-          .then((value) {
+    var email = _emailTextController.text.trim();
+    var password = _passwordTextController.text.trim();
+    if (email.isEmpty || password.isEmpty) {
+      // show error toast
+      Fluttertoast.showToast(msg: 'Please fill all fields');
+      return;
+    }
+
+    // request to firebase auth
+
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+    );
+
+    progressDialog.style(message: "Sin up succesfully");
+
+    progressDialog.show();
+
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      if (userCredential.user != null) {
+        progressDialog.hide();
         Navigator.pushNamedAndRemoveUntil(
             context, '/rootPage', (route) => false);
-        ;
-      }).onError((error, stackTrace) {
-        Fluttertoast.showToast(
-            msg: error.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      });
+      }
+    } on FirebaseAuthException catch (e) {
+      progressDialog.hide();
+
+      if (e.code == 'user-not-found') {
+        Fluttertoast.showToast(msg: 'User not found');
+      } else if (e.code == 'wrong-password') {
+        Fluttertoast.showToast(msg: 'Wrong password');
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Something went wrong');
+      progressDialog.hide();
     }
   }
-}
 
-switchListTile() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 50, right: 40),
-    child: SwitchListTile(
-      dense: true,
-      title: const Text(
-        'Remember Me',
-        style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
+  switchListTile() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 40),
+      child: SwitchListTile(
+        dense: true,
+        title: const Text(
+          'Remember Me',
+          style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
+        ),
+        value: false,
+        activeColor: Colors.black,
+        onChanged: (val) {},
       ),
-      value: false,
-      activeColor: Colors.black,
-      onChanged: (val) {},
-    ),
-  );
+    );
+  }
 }

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
+import 'package:recipes_app/views/widgets/profielInfo.dart';
 
 class ProfielWidget extends StatefulWidget {
   const ProfielWidget({Key? key}) : super(key: key);
@@ -15,30 +16,33 @@ class ProfielWidget extends StatefulWidget {
 class _ProfielWidgetState extends State<ProfielWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(top: 80, left: 80),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "ProfielWidget",
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            // the logout methode :::::::::::::::::::::::
-            TextButton(
-              child: Text("Log Out"),
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                print("sign Out");
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-            ),
-          ],
-        ));
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Info(
+            image: "assets/images/pic.png",
+            name: "Jhon Doe",
+            email: "Jhondoe01@gmail.com",
+          ),
+          SizedBox(height: 40), //20
+          ProfileMenuItem(
+            iconSrc: "assets/images/info.svg",
+            title: "Saved Recipes",
+          ),
+          ProfileMenuItem(
+            iconSrc: "assets/images/info.svg",
+            title: "Super Plan",
+          ),
+          ProfileMenuItem(
+            iconSrc: "assets/images/info.svg",
+            title: "Change Language",
+          ),
+          ProfileMenuItem(
+            iconSrc: "assets/images/info.svg",
+            title: "Help",
+          ),
+        ],
+      ),
+    );
   }
 }

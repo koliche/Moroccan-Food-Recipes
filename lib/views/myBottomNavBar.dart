@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:recipes_app/views/Profiel.dart';
 import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/login.dart';
 import 'package:recipes_app/views/widgets/ProfielWidget.dart';
@@ -20,7 +21,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const HomePage(),
     const CreatorWidget(),
     const FavoritWidget(),
-    const ProfielWidget(),
+    ProfielScreen(),
   ];
   void updateUI(int newVal) {
     setState(() {

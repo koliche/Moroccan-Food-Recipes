@@ -1,58 +1,113 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recipes_app/views/home.dart';
-import 'package:recipes_app/views/myBottomNavBar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+/*
+class AuthService {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-class AuthenticationService {
-  final FirebaseAuth _firebaseAuth;
-
-  AuthenticationService(this._firebaseAuth);
-
-  /// Changed to idTokenChanges as it updates depending on more cases.
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-
-  /// This won't pop routes so you could do something like
-  /// Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-  /// after you called this method if you want to pop all routes.
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  Stream<String> get onAuthStateChanged => _firebaseAuth.authStateChanges().map(
+        (user) => user!.uid,
+      );
+  // GET UID
+  String getCurrentUID() {
+    return _firebaseAuth.currentUser!.uid;
   }
 
-  /// There are a lot of different ways on how you can do exception handling.
-  /// This is to make it as easy as possible but a better way would be to
-  /// use your own custom class that would take the exception and return better
-  /// error messages. That way you can throw, return or whatever you prefer with that instead.
-  Future<Object?> logIn(
-      {required String email, required String password}) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return HomePage();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print(' error password is weeek');
-        return e.message;
-      }
-      return e.message;
-    }
+  // GET CURRENT USER
+  Future getCurrentUser() async {
+    return _firebaseAuth.currentUser;
   }
 
-  /// There are a lot of different ways on how you can do exception handling.
-  /// This is to make it as easy as possible but a better way would be to
-  /// use your own custom class that would take the exception and return better
-  /// error messages. That way you can throw, return or whatever you prefer with that instead.
-  Future<String?> signUp(
-      {required String email, required String password}) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return "Signed up";
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return e.message;
-      } else if (e.code == 'email-already-in-use') {
-        return e.message;
-      }
-      return e.message;
+  /*getProfileImage() {
+    if(_firebaseAuth.currentUser!.photoURL != null) {
+      return Image.network(_firebaseAuth.currentUser.photoURL, height: 100, width: 100);
+    } else {
+      return Icon(Icons.account_circle, size: 100);
     }
+  }*/
+
+  // Email & Password Sign Up
+  Future<String> createUserWithEmailAndPassword(
+      String email, String password, String name) async {
+    final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // Update the username
+    await updateUserName(name, authResult.user);
+    return authResult.user!.uid;
+  }
+
+  Future updateUserName(String name, User currentUser) async {
+    await currentUser.updateProfile(displayName: name);
+    await currentUser.reload();
+  }
+
+  // Email & Password Sign In
+  Future<String> signInWithEmailAndPassword(
+      String email, String password) async {
+    return (await _firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password))
+        .user!
+        .uid;
+  }
+
+  // Sign Out
+  signOut() async {
+    return await _firebaseAuth.signOut();
+  }
+
+  // Reset Password
+  Future sendPasswordResetEmail(String email) async {
+    return _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  // Create Anonymous User
+  Future singInAnonymously() {
+    return _firebaseAuth.signInAnonymously();
+  }
+
+  Future convertUserWithEmail(
+      String email, String password, String name) async {
+    final currentUser = _firebaseAuth.currentUser;
+
+    final credential =
+        EmailAuthProvider.credential(email: email, password: password);
+    await currentUser.linkWithCredential(credential);
+    await updateUserName(name, currentUser);
   }
 }
+
+class NameValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Name can't be empty";
+    }
+    if (value.length < 2) {
+      return "Name must be at least 2 characters long";
+    }
+    if (value.length > 50) {
+      return "Name must be less than 50 characters long";
+    }
+    return null;
+  }
+}
+
+class EmailValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Email can't be empty";
+    }
+    return null;
+  }
+}
+
+class PasswordValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Password can't be empty";
+    }
+    return null;
+  }
+}*/
