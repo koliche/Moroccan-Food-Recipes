@@ -137,11 +137,15 @@ class _HomePageState extends State<HomePage> {
               height: 19,
             ),
             Column(children: [
-              ListView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: Recipescard(),
-              ),
+              SizedBox(
+                height: 138,
+                child: ListView(
+                  padding: EdgeInsets.only(left: 10),
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: Recipescard(),
+                ),
+              )
             ]),
           ])
         ],
@@ -234,6 +238,7 @@ class _HomePageState extends State<HomePage> {
         );
       },
       child: Container(
+          margin: EdgeInsets.only(right: 20),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.white,
