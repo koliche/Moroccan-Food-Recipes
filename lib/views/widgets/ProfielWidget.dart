@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:recipes_app/constants.dart';
 import 'package:recipes_app/models/userModel.dart';
+import 'package:recipes_app/views/widgets/profielInfo.dart';
 
 class ProfielWidget extends StatefulWidget {
   const ProfielWidget({Key? key}) : super(key: key);
@@ -65,6 +67,7 @@ class _ProfielWidgetState extends State<ProfielWidget> {
           .putFile(imageFile!);
 
       TaskSnapshot snapshot = await uploadTask;
+      // TODO: Should resolve that ::::::::::::::::::::::::::
       final usere = FirebaseAuth.instance.currentUser;
       DatabaseReference userRef =
           // ignore: deprecated_member_use
@@ -102,6 +105,7 @@ class _ProfielWidgetState extends State<ProfielWidget> {
     user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       userRef =
+          // ignore: deprecated_member_use
           FirebaseDatabase.instance.reference().child('users').child(user!.uid);
     }
 
@@ -113,81 +117,130 @@ class _ProfielWidgetState extends State<ProfielWidget> {
     return Scaffold(
         body: userModel == null
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
+            : Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: Stack(
                       children: [
-                        CircleAvatar(
-                            radius: 80,
-                            backgroundImage: showLocalFile
-                                ? FileImage(imageFile!) as ImageProvider
-                                : userModel!.profileImage == ''
-                                    ? const NetworkImage(
-                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrQoGh518HulzrSYOTee8UO517D_j6h4AYQ&usqp=CAU')
-                                    : NetworkImage(userModel!.profileImage)),
-                        IconButton(
-                          icon: const Icon(Icons.camera_alt),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(
-                                          leading: const Icon(Icons.image),
-                                          title: const Text('From Gallery'),
-                                          onTap: () {
-                                            _pickImageFromGallery();
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: const Icon(Icons.camera_alt),
-                                          title: const Text('From Camera'),
-                                          onTap: () {
-                                            _pickImageFromCamera();
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                          },
+                        ClipPath(
+                          clipper: CustomShape(),
+                          child: Container(
+                            height: 170, //150
+                            color: kPrimaryColor,
+                          ),
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        Center(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                userModel!.fullName,
-                                style: const TextStyle(fontSize: 18),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: showLocalFile
+                                          ? FileImage(imageFile!)
+                                              as ImageProvider
+                                          : userModel!.profileImage == ''
+                                              ? const NetworkImage(
+                                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrQoGh518HulzrSYOTee8UO517D_j6h4AYQ&usqp=CAU')
+                                              : NetworkImage(
+                                                  userModel!.profileImage)),
+                                  IconButton(
+                                    padding: EdgeInsets.only(top: 20),
+                                    icon: const Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  ListTile(
+                                                    leading:
+                                                        const Icon(Icons.image),
+                                                    title: const Text(
+                                                        'From Gallery'),
+                                                    onTap: () {
+                                                      _pickImageFromGallery();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: const Icon(
+                                                        Icons.camera_alt),
+                                                    title: const Text(
+                                                        'From Camera'),
+                                                    onTap: () {
+                                                      _pickImageFromCamera();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                  ),
+                                ],
                               ),
-                              Text(
-                                userModel!.email,
-                                style: const TextStyle(fontSize: 18),
-                              ),
-                              Text(
-                                'Joined ${getHumanReadableDate(userModel!.dt)}',
-                                style: const TextStyle(fontSize: 18),
+                              // Full name and Email :::::::
+                              Center(
+                                child: Card(
+                                  margin: EdgeInsets.only(right: 20, top: 10),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        userModel!.fullName,
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        userModel!.email,
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        'Joined ${getHumanReadableDate(userModel!.dt)}',
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 40), //20
+                  ProfileMenuItem(
+                    iconSrc: "assets/images/info.svg",
+                    title: "Creator",
+                  ),
+                  SizedBox(height: 20), //20
+                  ProfileMenuItem(
+                    iconSrc: "assets/images/info.svg",
+                    title: "About",
+                  ),
+                  SizedBox(height: 20), //20
+                  ProfileMenuItem(
+                    iconSrc: "assets/images/info.svg",
+                    title: "Privacy and Security ",
+                  ),
+                  SizedBox(height: 20), //20
+                  ProfileMenuItem(
+                    iconSrc: "assets/images/info.svg",
+                    title: "Help",
+                  ),
+                ],
               ));
   }
 
