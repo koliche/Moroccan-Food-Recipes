@@ -64,9 +64,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 13.0, left: 13),
-                child: Row(
+              SizedBox(
+                height: 70,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
                   children: const [
                     Categories(
                         text: "Breakfast",
@@ -114,7 +116,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          // Recipes :
+          // Recipes ::::::::::::::::::::::::::::::::::
           Column(children: [
             const SizedBox(
               height: 16,

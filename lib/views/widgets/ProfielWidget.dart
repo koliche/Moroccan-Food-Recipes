@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:recipes_app/constants.dart';
 import 'package:recipes_app/models/userModel.dart';
-import 'package:recipes_app/views/widgets/profielInfo.dart';
+import 'package:recipes_app/views/widgets/ProfileMenuItem.dart';
 
 class ProfielWidget extends StatefulWidget {
   const ProfielWidget({Key? key}) : super(key: key);
