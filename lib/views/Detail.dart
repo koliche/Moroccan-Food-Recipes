@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
+
 class Details extends StatelessWidget {
- 
   final Recipes recipes;
-  Details({ required this.recipes});
-   @override
-   Widget build(BuildContext context) {
+  Details({required this.recipes});
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -146,6 +146,7 @@ class Details extends StatelessWidget {
           )),
     );
   }
+
   Widget buildNutrition(int value, String title, String subTitle) {
     return Container(
       height: 60,
@@ -220,6 +221,4 @@ class Details extends StatelessWidget {
       ),
     );
   }
-  
- 
 }

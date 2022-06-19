@@ -10,8 +10,6 @@ import 'package:recipes_app/views/widgets/creatorsWidget.dart';
 import 'package:recipes_app/views/widgets/recipe_card.dart';
 import 'package:recipes_app/views/widgets/searchWidget.dart';
 
-import '../models/buildRecipes.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
@@ -209,9 +207,13 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildRating(recipe.calories.toString()),
-                const Icon(
-                  Icons.favorite_border,
-                )
+
+                // ignore: unnecessary_new
+                new IconButton(
+                  icon: new Icon(Icons.favorite_border),
+                  hoverColor: Colors.black,
+                  onPressed: _addFavorite(),
+                ),
               ],
             ),
           ],
@@ -385,4 +387,7 @@ class _HomePageState extends State<HomePage> {
           )),
     );
   }
+
+  // for The favorite liste :::::::::::::::::
+  _addFavorite() {}
 }

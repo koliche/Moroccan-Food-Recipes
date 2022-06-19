@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:recipes_app/models/authentification.dart';
 import 'package:recipes_app/views/home.dart';
 import 'package:recipes_app/views/myBottomNavBar.dart';
 import 'package:recipes_app/views/signUp.dart';

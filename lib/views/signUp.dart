@@ -189,7 +189,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'email': email,
           'uid': uid,
           'dt': dt,
-          'profileImage': ''
+          'profileImage':
+              'https://firebasestorage.googleapis.com/v0/b/recipes-app-78f79.appspot.com/o/profiel.png?alt=media&token=0ff8dee4-c1b8-4fe8-963e-a0dd97f42949'
         });
 
         Fluttertoast.showToast(msg: 'Success');
