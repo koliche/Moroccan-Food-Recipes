@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:recipes_app/views/search.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({Key? key}) : super(key: key);
@@ -26,18 +27,32 @@ class _SearchWidgetState extends State<SearchWidget> {
                 color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: const TextField(
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.search,
-                    size: 25.0,
-                    color: Colors.greenAccent,
+              child: TextField(
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.search,
+                      size: 25.0,
+                      color: Colors.greenAccent,
+                    ),
+                    border: InputBorder.none,
+                    hintText: "search by recipes name ...",
                   ),
-                  border: InputBorder.none,
-                  hintText: "search by recipes name ...",
-                ),
-              ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                  }
+                  /*Stack(
+                    children: [
+                      Container(
+                        child: SearchScreen(),
+                      ),
+                    ],
+                  );*/
+
+                  ),
             ),
           ),
           //icon Filter setting ::::::::::
