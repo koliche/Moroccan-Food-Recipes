@@ -144,7 +144,7 @@ class _ProfielWidgetState extends State<ProfielWidget> {
                                               as ImageProvider
                                           : userModel!.profileImage == ''
                                               ? const NetworkImage(
-                                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGrQoGh518HulzrSYOTee8UO517D_j6h4AYQ&usqp=CAU')
+                                                  'https://raw.githubusercontent.com/koliche/recipes_app/master/assets/images/profiel.png')
                                               : NetworkImage(
                                                   userModel!.profileImage)),
                                   IconButton(
