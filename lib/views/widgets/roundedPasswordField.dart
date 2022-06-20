@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RoundedPasswordField extends StatelessWidget {
+class RoundedPasswordField extends StatefulWidget {
   RoundedPasswordField(
       {Key? key,
       this.hintText,
@@ -12,6 +12,12 @@ class RoundedPasswordField extends StatelessWidget {
   TextEditingController controller;
 
   @override
+  State<RoundedPasswordField> createState() => _RoundedPasswordFieldState();
+}
+
+class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
+  bool isHidden = true;
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -21,22 +27,31 @@ class RoundedPasswordField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
-        controller: controller,
-        obscureText: true,
+        controller: widget.controller,
+        obscureText: isHidden,
         cursorColor: Colors.black,
         decoration: InputDecoration(
             icon: Icon(
               Icons.lock,
               color: Color.fromARGB(255, 26, 126, 78),
             ),
-            hintText: hintText,
+            hintText: widget.hintText,
             hintStyle: const TextStyle(fontFamily: 'OpenSans'),
-            suffixIcon: Icon(
-              Icons.visibility,
-              color: Color.fromARGB(255, 26, 126, 78),
+            suffixIcon: InkWell(
+              child: Icon(
+                Icons.visibility,
+                color: Color.fromARGB(255, 26, 126, 78),
+              ),
+              onTap: _togglePasswordView,
             ),
             border: InputBorder.none),
       ),
     );
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      isHidden = !isHidden;
+    });
   }
 }
