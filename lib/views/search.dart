@@ -98,7 +98,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return Details(recipes: reci);
+                        return Details(
+                          recipes: reci,
+                        );
                       }),
                     );
                   },
@@ -126,7 +128,9 @@ class _SearchScreenState extends State<SearchScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return Details(recipes: recipes);
+            return Details(
+              recipes: recipes,
+            );
           }),
         );
       },

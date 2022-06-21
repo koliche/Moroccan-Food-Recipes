@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -20,23 +21,45 @@ class ProfielWidget extends StatefulWidget {
 
 class _ProfielWidgetState extends State<ProfielWidget> {
   User? user;
+
+  DatabaseReference? userRef;
   UserModel? userModel = UserModel(
-      uid: "jjhuu",
+      uid: 'fkdl',
       fullName: "fullName",
       email: "email",
       profileImage: "",
       dt: 23);
-  DatabaseReference? userRef;
 
   File? imageFile;
   bool showLocalFile = false;
 
+  Future getData() async {
+    var collection = FirebaseDatabase.instance.ref('users');
+    var docSnapshot = await collection.child('uid').get();
+    if (docSnapshot.exists) {
+      Map<String, dynamic>? data = docSnapshot.value as Map<String, dynamic>?;
+
+      print(data);
+      var fullName = data?['fullName']; // <-- The value you want to retrieve.
+      var email = data?['email'];
+      var profileImage = data?['profileImage'];
+      // Call setState if needed.
+      UserModel? userModel = UserModel(
+          uid: 'fkdl',
+          fullName: fullName,
+          email: email,
+          profileImage: profileImage,
+          dt: 23);
+      return userModel;
+    }
+  }
+
   _getUserDetails() async {
     DataSnapshot snapshot = (await userRef!.once()) as DataSnapshot;
 
-    userModel = UserModel.fromMap(snapshot.value as Map<String, dynamic>);
-
-    setState(() {});
+    setState(() {
+      userModel = UserModel.fromMap(snapshot.value as Map<String, dynamic>);
+    });
   }
 
   _pickImageFromGallery() async {
@@ -115,138 +138,135 @@ class _ProfielWidgetState extends State<ProfielWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: userModel == null
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  SizedBox(
-                    height: 200,
-                    child: Stack(
+        body: Column(
+      children: [
+        SizedBox(
+          height: 200,
+          child: Stack(
+            children: [
+              ClipPath(
+                clipper: CustomShape(),
+                child: Container(
+                  height: 170, //150
+                  color: kPrimaryColor,
+                ),
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ClipPath(
-                          clipper: CustomShape(),
-                          child: Container(
-                            height: 170, //150
-                            color: kPrimaryColor,
+                        CircleAvatar(
+                            radius: 50,
+                            backgroundImage: showLocalFile
+                                ? FileImage(imageFile!) as ImageProvider
+                                : userModel!.profileImage == ''
+                                    ? const NetworkImage(
+                                        'https://raw.githubusercontent.com/koliche/recipes_app/master/assets/images/profiel.png')
+                                    : NetworkImage(userModel!.profileImage)),
+                        IconButton(
+                          padding: EdgeInsets.only(top: 20),
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
                           ),
-                        ),
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage: showLocalFile
-                                          ? FileImage(imageFile!)
-                                              as ImageProvider
-                                          : userModel!.profileImage == ''
-                                              ? const NetworkImage(
-                                                  'https://raw.githubusercontent.com/koliche/recipes_app/master/assets/images/profiel.png')
-                                              : NetworkImage(
-                                                  userModel!.profileImage)),
-                                  IconButton(
-                                    padding: EdgeInsets.only(top: 20),
-                                    icon: const Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.white,
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ListTile(
+                                          leading: const Icon(Icons.image),
+                                          title: const Text('From Gallery'),
+                                          onTap: () {
+                                            _pickImageFromGallery();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: const Icon(Icons.camera_alt),
+                                          title: const Text('From Camera'),
+                                          onTap: () {
+                                            _pickImageFromCamera();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  ListTile(
-                                                    leading:
-                                                        const Icon(Icons.image),
-                                                    title: const Text(
-                                                        'From Gallery'),
-                                                    onTap: () {
-                                                      _pickImageFromGallery();
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                  ListTile(
-                                                    leading: const Icon(
-                                                        Icons.camera_alt),
-                                                    title: const Text(
-                                                        'From Camera'),
-                                                    onTap: () {
-                                                      _pickImageFromCamera();
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              // Full name and Email :::::::
-                              Center(
-                                child: Card(
-                                  margin: EdgeInsets.only(right: 20, top: 10),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        userModel!.fullName,
-                                        style: const TextStyle(fontSize: 18),
-                                      ),
-                                      Text(
-                                        userModel!.email,
-                                        style: const TextStyle(fontSize: 18),
-                                      ),
-                                      Text(
-                                        'Joined ${getHumanReadableDate(userModel!.dt)}',
-                                        style: const TextStyle(fontSize: 18),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                  );
+                                });
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: 40), //20
-                  ProfileMenuItem(
-                    iconSrc: "assets/images/info.svg",
-                    title: "Creator",
-                  ),
-                  SizedBox(height: 20), //20
-                  ProfileMenuItem(
-                    iconSrc: "assets/images/info.svg",
-                    title: "About",
-                  ),
-                  SizedBox(height: 20), //20
-                  ProfileMenuItem(
-                    iconSrc: "assets/images/info.svg",
-                    title: "Privacy and Security ",
-                  ),
-                  SizedBox(height: 20), //20
-                  ProfileMenuItem(
-                    iconSrc: "assets/images/info.svg",
-                    title: "Help",
-                  ),
-                ],
-              ));
+                    // Full name and Email :::::::
+                    Center(
+                      child: Card(
+                        margin: EdgeInsets.only(right: 20, top: 10),
+                        child: Column(
+                          children: [
+                            Text(
+                              userModel!.fullName,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              userModel!.email,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              'Joined ${getHumanReadableDate(userModel!.dt)}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 40), //20
+        ProfileMenuItem(
+          iconSrc: "assets/images/info.svg",
+          title: "Creator",
+        ),
+        SizedBox(height: 20), //20
+        ProfileMenuItem(
+          iconSrc: "assets/images/info.svg",
+          title: "About",
+        ),
+        SizedBox(height: 20), //20
+        ProfileMenuItem(
+          iconSrc: "assets/images/info.svg",
+          title: "Privacy and Security ",
+        ),
+        SizedBox(height: 20), //20
+        ProfileMenuItem(
+          iconSrc: "assets/images/info.svg",
+          title: "Help",
+        ),
+      ],
+    ));
   }
 
   String getHumanReadableDate(int dt) {
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(dt);
 
     return DateFormat('dd MMM yyyy').format(dateTime);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    DatabaseReference? _ref;
+    properties.add(DiagnosticsProperty<DatabaseReference>('_ref', _ref));
   }
 }

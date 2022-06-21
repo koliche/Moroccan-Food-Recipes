@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:recipes_app/models/FavoriteManager.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
 import 'package:recipes_app/views/Detail.dart';
@@ -234,10 +235,13 @@ class _HomePageState extends State<HomePage> {
   Widget RecipeCard(Recipes recipes, int index) {
     return GestureDetector(
       onTap: () {
+        FavoriteManager.indexOfRecipes = index;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return Details(recipes: recipes);
+            return Details(
+              recipes: recipes,
+            );
           }),
         );
       },
@@ -388,6 +392,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // for The favorite liste :::::::::::::::::
   _addFavorite() {}
+
+  // for The favorite liste :::::::::::::::::
 }

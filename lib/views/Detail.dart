@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:recipes_app/models/FavoriteManager.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
+import 'package:recipes_app/views/search.dart';
+import 'package:recipes_app/views/widgets/recipe_card.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   final Recipes recipes;
   Details({required this.recipes});
+
+  @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  int? a = FavoriteManager.indexOfRecipes;
+  bool isTap = false;
+  static List<Recipes> mainDataList = getRecipe();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +37,22 @@ class Details extends StatelessWidget {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.favorite_border,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                FavoriteManager.favoriteDataList.add(recipes[this.a!]);
+                setState(() {
+                  isTap = true;
+                });
+              },
+              child: isTap
+                  ? Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    )
+                  : Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                    ),
             ),
           ),
         ],
@@ -42,8 +67,8 @@ class Details extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildTextTitleVariation1(recipes.name),
-                  buildTextSubTitleVariation1(recipes.subname),
+                  buildTextTitleVariation1(widget.recipes.name),
+                  buildTextSubTitleVariation1(widget.recipes.subname),
                 ],
               ),
             ),
@@ -63,27 +88,28 @@ class Details extends StatelessWidget {
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipes.calories, "Calories", "Kcal"),
+                      buildNutrition(
+                          widget.recipes.calories, "Calories", "Kcal"),
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipes.carbo, "Carbo", "g"),
+                      buildNutrition(widget.recipes.carbo, "Carbo", "g"),
                       SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipes.protein, "Protein", "g"),
+                      buildNutrition(widget.recipes.protein, "Protein", "g"),
                     ],
                   ),
                   Positioned(
                     right: -80,
                     child: Hero(
-                      tag: recipes.image,
+                      tag: widget.recipes.image,
                       child: Container(
                         height: 310,
                         width: 310,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(recipes.image),
+                            image: AssetImage(widget.recipes.image),
                             fit: BoxFit.fitHeight,
                           ),
                         ),

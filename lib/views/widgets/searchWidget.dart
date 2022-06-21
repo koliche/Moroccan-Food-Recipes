@@ -43,16 +43,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       context,
                       MaterialPageRoute(builder: (context) => SearchScreen()),
                     );
-                  }
-                  /*Stack(
-                    children: [
-                      Container(
-                        child: SearchScreen(),
-                      ),
-                    ],
-                  );*/
-
-                  ),
+                  }),
             ),
           ),
           //icon Filter setting ::::::::::
