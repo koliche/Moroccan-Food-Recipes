@@ -233,6 +233,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget RecipeCard(Recipes recipes, int index) {
+    var isTap = false;
     return GestureDetector(
       onTap: () {
         FavoriteManager.indexOfRecipes = index;
@@ -317,12 +318,30 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                             // Favorite Icon To add recipes to the favorite liste ::::::
-                                            const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 9.0, top: 33),
-                                                child: Icon(
-                                                  Icons.favorite_border,
-                                                )),
+                                            InkWell(
+                                              onTap: () {
+                                                FavoriteManager.favoriteDataList
+                                                    .add(recipes);
+                                                setState(() {
+                                                  isTap = true;
+                                                });
+                                              },
+                                              child: isTap
+                                                  ? const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 9.0, top: 33),
+                                                      child: Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.red,
+                                                      ))
+                                                  : const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 9.0, top: 33),
+                                                      child: Icon(
+                                                        Icons.favorite_border,
+                                                        color: Colors.black,
+                                                      )),
+                                            ),
                                           ],
                                         ),
                                       ],
