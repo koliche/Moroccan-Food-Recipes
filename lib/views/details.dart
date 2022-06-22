@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
@@ -17,8 +19,141 @@ class _DetailState extends State<Detail> {
   Widget build(BuildContext context) {
     CollectionReference recipes =
         FirebaseFirestore.instance.collection('recipes');
-
-    return Text("data details \n ${widget.recipeId}");
+    return FutureBuilder<DocumentSnapshot>(
+        future: recipes.doc(widget.recipeId).get(),
+        builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return Scaffold(
+              backgroundColor: Colors.grey[50],
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                brightness: Brightness.light,
+                elevation: 0,
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 16),
+                    child: Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildTextTitleVariation1(data['name']),
+                          buildTextSubTitleVariation1(data['subname']),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      height: 310,
+                      padding: EdgeInsets.only(left: 16),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              buildTextTitleVariation2('Nutritions', false),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              /*buildNutrition(
+                                  recipe.calories, "Calories", "Kcal"),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              buildNutrition(recipe.carbo, "Carbo", "g"),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              buildNutrition(recipe.protein, "Protein", "g"),*/
+                            ],
+                          ),
+                          Positioned(
+                            right: -80,
+                            child: Hero(
+                              tag: data['image'],
+                              child: Container(
+                                height: 310,
+                                width: 310,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(data['image']),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16, bottom: 80),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildTextTitleVariation2('Ingredients', false),
+                          for (var i in data['Ingrediant'])
+                            buildTextSubTitleVariation1(i.toString()),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          buildTextTitleVariation2('Recipe preparation', false),
+                          for (var i in data['Recipe preparation'])
+                            buildTextSubTitleVariation1(i.toString()),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+              floatingActionButton: FloatingActionButton.extended(
+                  onPressed: () {},
+                  backgroundColor: Colors.greenAccent,
+                  icon: Icon(
+                    Icons.play_circle_fill,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  label: Text(
+                    "Watch Video",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+            );
+          }
+          return Text(" data not found @!!!");
+        }));
     /*Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -232,5 +367,11 @@ class _DetailState extends State<Detail> {
         ],
       ),
     );*/
+  }
+}
+
+getAngri(Map<String, dynamic> data) {
+  for (var el in data["Ingrediant"]) {
+    return Text(el.toString());
   }
 }
