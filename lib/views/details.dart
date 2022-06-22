@@ -1,16 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
 
-class Detail extends StatelessWidget {
-  final Recipe recipe;
-  
+class Detail extends StatefulWidget {
+  final String recipeId;
 
-  Detail({required this.recipe});
+  Detail({required this.recipeId});
 
   @override
+  State<Detail> createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    CollectionReference recipes =
+        FirebaseFirestore.instance.collection('recipes');
+
+    return Text("data details \n ${widget.recipeId}");
+    /*Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -222,9 +231,6 @@ class Detail extends StatelessWidget {
           ),
         ],
       ),
-    );
+    );*/
   }
-
-  
 }
-

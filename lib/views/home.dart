@@ -6,10 +6,13 @@ import 'package:recipes_app/models/data.dart';
 import 'package:recipes_app/models/shared.dart';
 import 'package:recipes_app/views/Detail.dart';
 import 'package:recipes_app/views/details.dart';
+import 'package:recipes_app/views/widgets/BuildRecipe.dart';
 import 'package:recipes_app/views/widgets/Categories.dart';
 import 'package:recipes_app/views/widgets/creatorsWidget.dart';
 import 'package:recipes_app/views/widgets/recipe_card.dart';
 import 'package:recipes_app/views/widgets/searchWidget.dart';
+
+import '../models/getRecipesData.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +21,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    print(docIds.length);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,12 +117,23 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 height: 350,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  children: buildRecipes(),
+                child: InkWell(
+                  child: FutureBuilder(
+                    future: getDocId(),
+                    builder: (context, snapshot) {
+                      return ListView.builder(
+                        padding: EdgeInsets.only(left: 10),
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: docIds.length,
+                        itemBuilder: (context, index) {
+                          return buildRecipe(documentId: docIds[index]);
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
+              )
             ],
           ),
           // Recipes ::::::::::::::::::::::::::::::::::
@@ -152,75 +173,6 @@ class _HomePageState extends State<HomePage> {
         ],
       )),
     ));
-  }
-
-  List<Widget> buildRecipes() {
-    List<Widget> list = [];
-    for (var i = 0; i < getRecipes().length; i++) {
-      list.add(buildRecipe(getRecipes()[i], i));
-    }
-    return list;
-  }
-
-  // for popular recipe
-  Widget buildRecipe(Recipe recipe, int index) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Detail(recipe: recipe)),
-        );
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          //boxShadow: [kBoxShadow],
-        ),
-        margin: EdgeInsets.only(
-            right: 16, left: index == 0 ? 16 : 0, bottom: 16, top: 8),
-        padding: const EdgeInsets.all(16),
-        width: 220,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Hero(
-                tag: recipe.image,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(recipe.image),
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            buildRecipeTitle(recipe.title),
-            buildTextSubTitleVariation2(recipe.description),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildRating(recipe.calories.toString()),
-
-                // ignore: unnecessary_new
-                new IconButton(
-                  icon: new Icon(Icons.favorite_border),
-                  hoverColor: Colors.black,
-                  onPressed: _addFavorite(),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   // for all recipes
