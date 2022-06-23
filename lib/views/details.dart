@@ -81,16 +81,16 @@ class _DetailState extends State<Detail> {
                               SizedBox(
                                 height: 16,
                               ),
-                              /*buildNutrition(
-                                  recipe.calories, "Calories", "Kcal"),
+                              buildNutrition(
+                                  data['calories'], "Calories", "Kcal"),
                               SizedBox(
                                 height: 16,
                               ),
-                              buildNutrition(recipe.carbo, "Carbo", "g"),
+                              buildNutrition(data["carbo"], "Carbo", "g"),
                               SizedBox(
                                 height: 16,
                               ),
-                              buildNutrition(recipe.protein, "Protein", "g"),*/
+                              buildNutrition(data["protein"], "Protein", "g"),
                             ],
                           ),
                           Positioned(
@@ -112,6 +112,7 @@ class _DetailState extends State<Detail> {
                         ],
                       ),
                     ),
+                    // The last part of the view ::::::::::::::
                     Padding(
                       padding: EdgeInsets.only(left: 16, right: 16, bottom: 80),
                       child: Column(
@@ -152,7 +153,12 @@ class _DetailState extends State<Detail> {
                   )),
             );
           }
-          return Text(" data not found @!!!");
+          return Center(
+            child: Container(
+              height: 20,
+              child: CircularProgressIndicator(backgroundColor: Colors.white),
+            ),
+          );
         }));
     /*Scaffold(
       backgroundColor: Colors.grey[50],
@@ -368,6 +374,81 @@ class _DetailState extends State<Detail> {
       ),
     );*/
   }
+}
+
+Widget buildNutrition(int value, String title, String subTitle) {
+  return Container(
+    height: 60,
+    width: 150,
+    padding: EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      color: Colors.grey[50],
+      borderRadius: BorderRadius.all(
+        Radius.circular(50),
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          spreadRadius: 2,
+          blurRadius: 8,
+          offset: Offset(0, 0),
+        )
+      ],
+    ),
+    child: Row(
+      children: [
+        Container(
+          height: 44,
+          width: 44,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: Offset(0, 0),
+              )
+            ],
+          ),
+          child: Center(
+            child: Text(
+              value.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              subTitle,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[400],
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }
 
 getAngri(Map<String, dynamic> data) {
