@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:recipes_app/models/FavoriteManager.dart';
 import 'package:recipes_app/models/shared.dart';
 import 'package:recipes_app/views/details.dart';
 
@@ -12,6 +15,8 @@ class buildRecipe extends StatefulWidget {
 }
 
 class _buildRecipeState extends State<buildRecipe> {
+  var isTap = false;
+  List<dynamic> docIdsFav = [];
   @override
   Widget build(BuildContext context) {
     String index;
@@ -72,10 +77,47 @@ class _buildRecipeState extends State<buildRecipe> {
                         buildRating(data['calories']),
 
                         // ignore: unnecessary_new
-                        new IconButton(
-                          icon: new Icon(Icons.favorite_border),
-                          hoverColor: Colors.black,
-                          onPressed: _addFavorite(),
+                        InkWell(
+                          onTap: () {
+                            if (!isTap) {
+                              FirebaseFirestore.instance
+                                  .collection("favorite")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .collection("favorite list")
+                                  .doc(widget.documentId)
+                                  .set({
+                                'name': data['name'],
+                                'subname': data['subname'],
+                                'image': data['image'],
+                              });
+                              Fluttertoast.showToast(
+                                  msg: "Ajouter avec succés",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              FirebaseFirestore.instance
+                                  .collection("favorite")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .collection("favorite list")
+                                  .doc(widget.documentId)
+                                  .delete();
+
+                              Fluttertoast.showToast(
+                                  msg: "Suprimer avec succés",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
+                            setState(() {
+                              isTap = !isTap;
+                            });
+                          },
+                          child: Icon(isTap == false
+                              ? Icons.favorite_border
+                              : Icons.favorite),
                         ),
                       ],
                     ),
@@ -84,7 +126,7 @@ class _buildRecipeState extends State<buildRecipe> {
               ),
             );
           }
-          return Text(" data not found @!!!");
+          return Text("");
         }));
   }
 

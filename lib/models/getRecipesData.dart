@@ -12,14 +12,14 @@ Future getDocId() async {
           }));
 }
 
-List<dynamic> detailIds = [];
-Future getDetailId() async {
+List<dynamic> favIds = [];
+Future getFavId() async {
   await FirebaseFirestore.instance
-      .collection("recipes")
+      .collection("favorite")
       .doc()
-      .collection("Detail")
+      .collection("favorite list")
       .get()
       .then((snapshot) => snapshot.docs.forEach((document) {
-            detailIds.add(document.reference.id);
+            favIds.add(document.reference.id);
           }));
 }

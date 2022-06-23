@@ -1,41 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:recipes_app/constants.dart';
 
 class ProfileMenuItem extends StatelessWidget {
   const ProfileMenuItem({
     Key? key,
-    required this.iconSrc,
-    required this.title,
+    required this.icon,
+    required this.text,
   }) : super(key: key);
-  final String iconSrc, title;
+  final IconData icon;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: SafeArea(
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.info),
-              SizedBox(width: 5),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16, //16
-                  color: kTextLigntColor,
-                ),
-              ),
-              Spacer(),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: kTextLigntColor,
-              )
-            ],
+    return Container(
+      height: 55,
+      margin: EdgeInsets.symmetric(
+        horizontal: 10,
+      ).copyWith(
+        bottom: 20,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.grey.shade300,
+      ),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            this.icon,
+            size: 25,
           ),
-        ),
+          SizedBox(width: 15),
+          Text(
+            this.text,
+            style: kTitleTextStyle.copyWith(
+                fontWeight: FontWeight.w500, fontFamily: "Poppins"),
+          ),
+          Spacer(),
+          Icon(
+            LineAwesomeIcons.angle_right,
+            size: 25,
+          ),
+        ],
       ),
     );
   }

@@ -20,238 +20,45 @@ class ProfielWidget extends StatefulWidget {
 }
 
 class _ProfielWidgetState extends State<ProfielWidget> {
-  User? user;
-
-  DatabaseReference? userRef;
-  UserModel? userModel = UserModel(
-      uid: 'fkdl',
-      fullName: "fullName",
-      email: "email",
-      profileImage: "",
-      dt: 23);
-
-  File? imageFile;
-  bool showLocalFile = false;
-
-  Future getData() async {
-    var collection = FirebaseDatabase.instance.ref('users');
-    var docSnapshot = await collection.child('uid').get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.value as Map<String, dynamic>?;
-
-      print(data);
-      var fullName = data?['fullName']; // <-- The value you want to retrieve.
-      var email = data?['email'];
-      var profileImage = data?['profileImage'];
-      // Call setState if needed.
-      UserModel? userModel = UserModel(
-          uid: 'fkdl',
-          fullName: fullName,
-          email: email,
-          profileImage: profileImage,
-          dt: 23);
-      return userModel;
-    }
-  }
-
-  _getUserDetails() async {
-    DataSnapshot snapshot = (await userRef!.once()) as DataSnapshot;
-
-    setState(() {
-      userModel = UserModel.fromMap(snapshot.value as Map<String, dynamic>);
-    });
-  }
-
-  _pickImageFromGallery() async {
-    XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (xFile == null) return;
-
-    final tempImage = File(xFile.path);
-
-    imageFile = tempImage;
-    showLocalFile = true;
-    setState(() {});
-
-    // upload to firebase storage
-
-    ProgressDialog progressDialog = ProgressDialog(
-      context,
-    );
-    progressDialog.style(message: ' Please wait \n Uploading !!!');
-    progressDialog.show();
-    try {
-      var fileName = userModel!.email + '.jpg';
-
-      UploadTask uploadTask = FirebaseStorage.instance
-          .ref()
-          .child('profile_images')
-          .child(fileName)
-          .putFile(imageFile!);
-
-      TaskSnapshot snapshot = await uploadTask;
-      // TODO: Should resolve that ::::::::::::::::::::::::::
-      final usere = FirebaseAuth.instance.currentUser;
-      DatabaseReference userRef =
-          // ignore: deprecated_member_use
-          FirebaseDatabase.instance.reference().child('users');
-      String uid = usere!.uid;
-
-      String profileImageUrl = await snapshot.ref.getDownloadURL();
-      await userRef.child(uid).update({'profileImage': profileImageUrl});
-      print(profileImageUrl);
-
-      progressDialog.hide();
-    } catch (e) {
-      progressDialog.hide();
-
-      print(e.toString());
-    }
-  }
-
-  _pickImageFromCamera() async {
-    XFile? xFile = await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (xFile == null) return;
-
-    final tempImage = File(xFile.path);
-
-    imageFile = tempImage;
-    showLocalFile = true;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      userRef =
-          // ignore: deprecated_member_use
-          FirebaseDatabase.instance.reference().child('users').child(user!.uid);
-    }
-
-    _getUserDetails();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
       children: [
-        SizedBox(
-          height: 200,
-          child: Stack(
-            children: [
-              ClipPath(
-                clipper: CustomShape(),
-                child: Container(
-                  height: 170, //150
-                  color: kPrimaryColor,
+        Container(
+          width: 150,
+          height: 150,
+          padding: EdgeInsets.all(8),
+          decoration: avatarDecoration,
+          child: Container(
+            decoration: avatarDecoration,
+            padding: EdgeInsets.all(3),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/profiel.png'),
                 ),
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                            radius: 50,
-                            backgroundImage: showLocalFile
-                                ? FileImage(imageFile!) as ImageProvider
-                                : userModel!.profileImage == ''
-                                    ? const NetworkImage(
-                                        'https://raw.githubusercontent.com/koliche/recipes_app/master/assets/images/profiel.png')
-                                    : NetworkImage(userModel!.profileImage)),
-                        IconButton(
-                          padding: EdgeInsets.only(top: 20),
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(
-                                          leading: const Icon(Icons.image),
-                                          title: const Text('From Gallery'),
-                                          onTap: () {
-                                            _pickImageFromGallery();
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: const Icon(Icons.camera_alt),
-                                          title: const Text('From Camera'),
-                                          onTap: () {
-                                            _pickImageFromCamera();
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                          },
-                        ),
-                      ],
-                    ),
-                    // Full name and Email :::::::
-                    Center(
-                      child: Card(
-                        margin: EdgeInsets.only(right: 20, top: 10),
-                        child: Column(
-                          children: [
-                            Text(
-                              userModel!.fullName,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              userModel!.email,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              'Joined ${getHumanReadableDate(userModel!.dt)}',
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
         SizedBox(height: 40), //20
         ProfileMenuItem(
-          iconSrc: "assets/images/info.svg",
-          title: "Creator",
-        ),
-        SizedBox(height: 20), //20
+          icon: Icons.info,
+          text: "info",
+        ), //20
         ProfileMenuItem(
-          iconSrc: "assets/images/info.svg",
-          title: "About",
-        ),
-        SizedBox(height: 20), //20
+          icon: Icons.lock,
+          text: "privacy",
+        ), //20
         ProfileMenuItem(
-          iconSrc: "assets/images/info.svg",
-          title: "Privacy and Security ",
-        ),
-        SizedBox(height: 20), //20
+          icon: Icons.access_time_outlined,
+          text: "about",
+        ), //20
         ProfileMenuItem(
-          iconSrc: "assets/images/info.svg",
-          title: "Help",
+          icon: Icons.help_center,
+          text: "help",
         ),
       ],
     ));

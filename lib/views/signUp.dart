@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -176,15 +177,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (userCredential.user != null) {
         // store user information in Realtime database
-
-        DatabaseReference userRef =
-            // ignore: deprecated_member_use
-            FirebaseDatabase.instance.reference().child('users');
-
         String uid = userCredential.user!.uid;
         int dt = DateTime.now().millisecondsSinceEpoch;
 
-        await userRef.child(uid).set({
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'fullName': fullName,
           'email': email,
           'uid': uid,
