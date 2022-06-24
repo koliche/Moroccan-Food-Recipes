@@ -57,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 15,
                         ),
                         const Text(
-                          "or use your email account",
+                          "Use your email account",
                           style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'OpenSans',
@@ -166,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       context,
     );
 
-    progressDialog.style(message: "Sin up succesfully");
+    progressDialog.style(message: "Sign up succesfully");
 
     progressDialog.show();
     try {

@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context,
     );
 
-    progressDialog.style(message: "Sin up succesfully");
+    progressDialog.style(message: "Sign up succesfully");
 
     progressDialog.show();
 
@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'Remember Me',
           style: TextStyle(fontSize: 16, fontFamily: 'OpenSans'),
         ),
-        value: false,
+        value: true,
         activeColor: Colors.black,
         onChanged: (val) {},
       ),

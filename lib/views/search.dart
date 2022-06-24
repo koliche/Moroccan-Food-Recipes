@@ -80,30 +80,33 @@ class _SearchScreenState extends State<SearchScreen> {
 
           Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(top: 10, left: 10),
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: recipes.length,
               itemBuilder: (BuildContext context, int index) {
                 final reci = recipes[index];
-                return ListTile(
-                  leading: Image.asset(
-                    reci.image,
-                    fit: BoxFit.cover,
-                    width: 50,
-                    height: 50,
+                return Container(
+                  height: 90,
+                  margin: EdgeInsets.only(top: 10),
+                  color: kWhite,
+                  child: ListTile(
+                    leading: Image.asset(
+                      reci.image,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(reci.name),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return Details(
+                            recipes: reci,
+                          );
+                        }),
+                      );
+                    },
                   ),
-                  title: Text(reci.name),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return Details(
-                          recipes: reci,
-                        );
-                      }),
-                    );
-                  },
                 );
               },
             ), // ListView.builder
@@ -116,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
   // for all recipes
   List<Widget> Recipescard() {
     List<Widget> list = [];
-    for (var i = 0; i < getRecipes().length; i++) {
+    for (var i = 0; i < getRecipe().length; i++) {
       list.add(RecipeCard(getRecipe()[i], i));
     }
     return list;

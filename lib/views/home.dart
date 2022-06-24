@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
   // for all recipes
   List<Widget> Recipescard() {
     List<Widget> list = [];
-    for (var i = 0; i < getRecipes().length; i++) {
+    for (var i = 0; i < getRecipe().length; i++) {
       list.add(RecipeCard(getRecipe()[i], i));
     }
     return list;
