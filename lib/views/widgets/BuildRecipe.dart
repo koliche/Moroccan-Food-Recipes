@@ -74,7 +74,7 @@ class _buildRecipeState extends State<buildRecipe> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        buildRating(data['calories']),
+                        buildRating(data['rating']),
 
                         // ignore: unnecessary_new
                         InkWell(

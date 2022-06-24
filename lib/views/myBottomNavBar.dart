@@ -17,7 +17,7 @@ class MyBottomNavBar extends StatefulWidget {
 }
 
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
-  int selectedIndex = 0;
+  static int selectedIndex = 0;
   List<Widget> myWidgets = [
     const HomePage(),
     const CreatorWidget(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_app/constants.dart';
+import 'package:recipes_app/views/editProfiel.dart';
 import 'package:recipes_app/views/widgets/ProfielWidget.dart';
 
 class ProfielScreen extends StatefulWidget {
@@ -33,7 +34,14 @@ class _ProfielScreenState extends State<ProfielScreen> {
       actions: <Widget>[
         // ignore: deprecated_member_use
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return EditProfil();
+              }),
+            );
+          },
           child: const Text(
             "Edit",
             style: TextStyle(

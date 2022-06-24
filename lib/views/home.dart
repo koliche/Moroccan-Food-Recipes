@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          // Popular Recipes ::::::
+          // All Recipes ::::::
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                     width: 18,
                   ),
                   Text(
-                    "Popular Recipes ",
+                    "All Recipes ",
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.black,
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          // Recipes ::::::::::::::::::::::::::::::::::
+          // Popular Recipes ::::::::::::::::::::::::::::::::::
           Column(children: [
             const SizedBox(
               height: 16,
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   width: 18,
                 ),
                 Text(
-                  "Recipes ",
+                  "Popular Recipes ",
                   style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
