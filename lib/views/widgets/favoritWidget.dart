@@ -166,7 +166,7 @@ class _FavoritWidgetState extends State<FavoritWidget> {
 
                                                               Fluttertoast.showToast(
                                                                       msg:
-                                                                          "Suprimer avec succés",
+                                                                          "Deleted Sucsusffuly !",
                                                                       toastLength:
                                                                           Toast
                                                                               .LENGTH_SHORT,
