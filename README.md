@@ -1,4 +1,4 @@
-# recipes_app
+# Moroccan Food Recipes
 
 A new Flutter project.
 
