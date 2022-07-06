@@ -6,7 +6,7 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-![Welcome Image](assets\images\readmi\furst.png)
+![Welcome Image](https://user-images.githubusercontent.com/66259634/177658784-8a3f7483-beb4-475d-b74d-17bb29fd9434.png)
 
 A few resources to get you started if this is your first Flutter project:
 
